@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYNXCESS — E-Murika</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#E8EDF5; --bg2:#EEF2F9; --white:#FFFFFF;
+  --blue:#1AA7E8; --blue-dk:#0E86C3; --purple:#7C3AED;
+  --navy:#0D1B2E; --text:#0F1923; --text2:#4A5568; --text3:#718096;
+  --shadow:rgba(0,0,0,0.07); --shadow2:rgba(0,0,0,0.13);
+  --border:rgba(0,0,0,0.07);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+h1,h2,h3,h4,h5{font-family:'Poppins',sans-serif}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+
+/* ─── SPLASH ─── */
+#splash{position:fixed;inset:0;z-index:9999;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+#splash.out{animation:splashOut 0.8s cubic-bezier(0.4,0,1,1) forwards}
+@keyframes splashOut{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.06);pointer-events:none}}
+.splash-ring{width:170px;height:170px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;animation:ringIn 1s cubic-bezier(0.16,1,0.3,1) forwards;opacity:0}
+@keyframes ringIn{0%{opacity:0;transform:scale(0.6) rotate(-20deg)}70%{opacity:1;transform:scale(1.04) rotate(2deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
+.splash-ring::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,#1AA7E8,#7C3AED,#1AA7E8);animation:ringRotate 3s linear infinite}
+@keyframes ringRotate{to{transform:rotate(360deg)}}
+.splash-ring::after{content:'';position:absolute;inset:3px;border-radius:50%;background:#fff}
+.splash-logo-img{width:165px;height:165px;border-radius:50%;overflow:hidden;position:relative;z-index:1}
+.splash-logo-img img{width:100%;height:100%;object-fit:cover}
+.splash-logo-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1AA7E8,#7C3AED);color:#fff;font-family:'Poppins',sans-serif;font-weight:800;font-size:1.4rem;letter-spacing:0.05em}
+.splash-text{text-align:center;animation:textRise 0.7s ease 0.5s both}
+@keyframes textRise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.splash-name{font-family:'Poppins',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:0.1em;color:var(--text)}
+.splash-sub{font-size:0.8rem;color:#888;margin-top:5px;letter-spacing:0.06em}
+.splash-bar{width:130px;height:2px;background:#e8e8e8;border-radius:99px;overflow:hidden;margin:10px auto 0}
+.splash-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:99px;animation:barFill 2.4s cubic-bezier(0.4,0,0.2,1) 0.3s forwards;width:0}
+@keyframes barFill{to{width:100%}}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;transition:box-shadow 0.3s,transform 0.3s;will-change:transform}
+nav.hidden{transform:translateY(-100%)}
+nav.scrolled{box-shadow:0 2px 24px var(--shadow2)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo-img{width:36px;height:36px;border-radius:50%;overflow:hidden}
+.nav-logo-img img{width:100%;height:100%;object-fit:cover}
+.nav-brand{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.06em;color:var(--text)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{font-size:0.82rem;font-weight:500;color:var(--text2);padding:6px 13px;border-radius:8px;transition:all 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:2px;left:13px;right:13px;height:2px;background:var(--blue);transform:scaleX(0);transition:transform 0.2s;border-radius:1px}
+.nav-links a:hover{color:var(--blue);background:rgba(26,167,232,0.08)}
+.nav-links a:hover::after{transform:scaleX(1)}
+
+/* ─── HERO ─── */
+#hero{
+  .section-bg{
+  position:relative;
+  isolation:isolate;
+}
+
+.section-bg::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+    url('images/2-womentrade.jpg') center/cover no-repeat;
+  filter: blur(8px);
+  transform: scale(1.08); /* prevents blur edge crop */
+  z-index:-1;
+}
+min-height:100vh;background:linear-gradient(145deg,#c8d4e8 0%,#d8e2ee 35%,#cdd8e5 65%,#bccad9 100%);display:flex;align-items:center;padding:64px 48px 80px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 50%,rgba(255,255,255,0.35),transparent),radial-gradient(ellipse 50% 50% at 75% 50%,rgba(200,215,230,0.4),transparent)}
+/* Hero animated particles */
+.hero-particles{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.particle{position:absolute;border-radius:50%;animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) scale(1);opacity:0}}
+.hero-inner{max-width:1240px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 400px;gap:60px;align-items:center;position:relative;z-index:1}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;font-size:0.74rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:24px;animation:heroIn 0.7s ease 0.1s both}
+.hero-tag::before{content:'—'}
+.hero-h1{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;line-height:1.15;color:var(--text);margin-bottom:20px;animation:heroIn 0.7s ease 0.2s both}
+.hero-h1 .blue{color:var(--blue)}
+.hero-desc{font-size:0.97rem;color:var(--text2);line-height:1.75;max-width:460px;margin-bottom:36px;animation:heroIn 0.7s ease 0.3s both}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:heroIn 0.7s ease 0.4s both}
+@keyframes heroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.btn-primary{padding:13px 28px;border-radius:50px;background:var(--blue);color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.88rem;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 18px rgba(26,167,232,0.35);position:relative;overflow:hidden}
+.btn-primary::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,0);transition:background 0.2s}
+.btn-primary:hover{background:var(--blue-dk);transform:translateY(-2px);box-shadow:0 8px 28px rgba(26,167,232,0.45)}
+.btn-ghost{padding:12px 28px;border-radius:50px;background:#fff;color:var(--text);font-family:'Poppins',sans-serif;font-weight:600;font-size:0.88rem;border:2px solid rgba(0,0,0,0.12);cursor:pointer;transition:all 0.3s}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px);box-shadow:0 4px 16px rgba(26,167,232,0.15)}
+.hero-stats-card{background:#fff;border-radius:22px;padding:36px 32px;box-shadow:0 8px 40px rgba(0,0,0,0.1);animation:cardSlide 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s both;transform-origin:right center}
+@keyframes cardSlide{from{opacity:0;transform:translateX(40px) scale(0.96)}to{opacity:1;transform:translateX(0) scale(1)}}
+.hero-stats-label{font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:24px;display:flex;align-items:center;gap:8px}
+.hero-stats-label::before{content:'—'}
+.hero-stat{padding:16px 0}
+.hero-stat+.hero-stat{border-top:1px solid rgba(0,0,0,0.07)}
+.hero-stat-num{font-family:'Poppins',sans-serif;font-size:2.2rem;font-weight:800;color:var(--blue);line-height:1}
+.hero-stat-num sup{font-size:1rem;font-weight:600;vertical-align:super}
+.hero-stat-desc{font-size:0.82rem;color:var(--text3);margin-top:4px}
+.hero-stat-special{color:var(--blue);font-family:'Poppins',sans-serif;font-size:1.35rem;font-weight:800}
+
+/* ─── SECTION BASE ─── */
+.section{padding:100px 48px;position:relative;overflow:hidden}
+.section-inner{max-width:1240px;margin:0 auto}
+.section-label{font-size:0.7rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-label::before{content:'—';display:block}
+.section-title{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:800;line-height:1.2;margin-bottom:14px;color:var(--text)}
+.section-sub{font-size:0.97rem;color:var(--text2);line-height:1.8;max-width:560px}
+
+/* ─── MISSION ─── */
+#mission{background:var(--bg)}
+.mission-wrap{max-width:740px;margin:60px auto 0}
+.mission-card{background:#fff;border-radius:22px;padding:52px 56px;box-shadow:0 2px 20px var(--shadow);text-align:center;transition:transform 0.4s,box-shadow 0.4s}
+.mission-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px var(--shadow2)}
+.mission-icon{color:var(--blue);font-size:1.8rem;margin-bottom:24px;opacity:0.7;font-weight:900;line-height:1}
+.mission-quote{font-size:clamp(1rem,2vw,1.2rem);font-style:italic;color:var(--text);line-height:1.85;font-weight:400}
+
+/* ─── PROBLEM ─── */
+/* Layout */
+.problem-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:72px;
+  align-items:center;
+}
+
+/* 2x2 Image Grid */
+.problem-photos{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:18px;
+}
+
+/* Image Card */
+.photo-card{
+  border-radius:18px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  aspect-ratio: 1 / 1;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.photo-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.photo-card:hover{
+  transform: translateY(-6px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.12);
+}
+
+/* Right side spacing */
+.problem-content{
+  max-width:560px;
+}
+
+/* Stats spacing */
+.problem-stats{
+  display:flex;
+  gap:18px;
+  margin-top:28px;
+}
+.stat-box{background:#fff;border-radius:16px;padding:20px 18px;box-shadow:0 2px 12px var(--shadow);transition:transform 0.3s,box-shadow 0.3s}
+.stat-box:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--shadow2)}
+.stat-box-num{font-family:'Poppins',sans-serif;font-size:2rem;font-weight:800;color:var(--blue);line-height:1}
+.stat-box-num span{font-size:0.9rem}
+.stat-box-lbl{font-size:0.76rem;color:var(--text3);margin-top:5px;text-transform:uppercase;letter-spacing:0.05em}
+
+/* ─── 5 WHYS ─── */
+#whys{background:var(--bg)}
+.whys-header{max-width:600px;margin-bottom:56px}
+.whys-list{position:relative;padding-left:40px}
+.whys-list::before{content:'';position:absolute;left:27px;top:28px;bottom:28px;width:1px;background:linear-gradient(to bottom,rgba(26,167,232,0.5),rgba(26,167,232,0.1))}
+.why-item{display:grid;grid-template-columns:56px 1fr;gap:28px;margin-bottom:40px;position:relative;opacity:0;transform:translateX(-20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.why-item.visible{opacity:1;transform:translateX(0)}
+.why-num{width:56px;height:56px;border-radius:50%;background:#fff;border:1px solid rgba(26,167,232,0.2);display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:700;font-size:1.1rem;color:var(--blue);flex-shrink:0;position:relative;z-index:1;box-shadow:0 2px 12px var(--shadow);transition:box-shadow 0.3s,border-color 0.3s}
+.why-item:hover .why-num{box-shadow:0 0 0 6px rgba(26,167,232,0.12);border-color:rgba(26,167,232,0.5)}
+.why-body{padding-top:12px}
+.why-q{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:10px}
+.why-a{font-size:0.9rem;color:var(--text2);line-height:1.75;margin-bottom:12px}
+.why-badge{display:inline-flex;align-items:center;background:rgba(124,58,237,0.07);border:1px solid rgba(124,58,237,0.18);border-radius:50px;padding:4px 14px;font-size:0.7rem;font-weight:600;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase}
+
+/* ─── E-MURIKA ─── */
+:root{
+  --navy:#0b1220;
+  --blue:#1AA7E8;
+}
+
+/* SECTION */
+#emurika{
+  background:var(--navy);
+  padding:100px 48px;
+  perspective:1200px;
+}
+
+/* CONTAINER */
+.emurika-inner{
+  max-width:1300px;
+  margin:0 auto;
+}
+
+/* CENTER */
+.emurika-center{
+  text-align:center;
+  padding-bottom:56px;
+}
+
+/* 3D LOGO RING */
+.emurika-logo-ring{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  margin:0 auto 36px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transform-style:preserve-3d;
+
+  animation:
+    rotate3D 8s ease-in-out infinite,
+    float 4s ease-in-out infinite;
+}
+
+/* ROTATION */
+@keyframes rotate3D{
+  0%{ transform:rotateX(0deg) rotateY(0deg); }
+  25%{ transform:rotateX(15deg) rotateY(90deg); }
+  50%{ transform:rotateX(0deg) rotateY(180deg); }
+  75%{ transform:rotateX(-15deg) rotateY(270deg); }
+  100%{ transform:rotateX(0deg) rotateY(360deg); }
+}
+
+/* FLOAT */
+@keyframes float{
+  0%,100%{ transform:translateY(0px); }
+  50%{ transform:translateY(-12px); }
+}
+
+/* GLOW RING */
+.emurika-logo-ring::before{
+  content:'';
+  position:absolute;
+  inset:-6px;
+  border-radius:50%;
+  background:conic-gradient(
+    from 0deg,
+    #8B5CF6,
+    #1AA7E8,
+    #00E5FF,
+    #8B5CF6
+  );
+  z-index:0;
+
+  animation:spinRing 4s linear infinite;
+
+  filter:blur(8px) brightness(1.5);
+}
+
+/* SPIN */
+@keyframes spinRing{
+  to{ transform:rotate(360deg); }
+}
+
+/* INNER DEPTH */
+.emurika-logo-ring::after{
+  content:'';
+  position:absolute;
+  inset:6px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #1a2a40, #0d1b2e);
+  z-index:1;
+
+  box-shadow:
+    inset 0 10px 30px rgba(0,0,0,0.7),
+    inset 0 -10px 20px rgba(255,255,255,0.05);
+}
+
+/* LOGO CORE */
+.emurika-logo-img{
+  width:210px;
+  height:210px;
+  border-radius:50%;
+  overflow:hidden;
+  position:relative;
+  z-index:2;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transform:translateZ(40px);
+
+  box-shadow:
+    0 25px 50px rgba(0,0,0,0.7),
+    0 0 30px rgba(26,167,232,0.35);
+}
+
+/* IMAGE */
+.emurika-logo-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* SHINE */
+.emurika-logo-img::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255,255,255,0.25),
+    transparent 70%
+  );
+  opacity:0;
+  transition:opacity 0.4s;
+}
+
+/* HOVER EFFECT */
+.emurika-logo-ring:hover{
+  animation:none;
+  transform:rotateX(10deg) rotateY(25deg) scale(1.08);
+}
+
+.emurika-logo-ring:hover .emurika-logo-img::after{
+  opacity:1;
+}
+
+/* TEXT */
+.emurika-sub-label{
+  font-size:0.7rem;
+  font-weight:600;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:14px;
+}
+
+.emurika-title{
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;
+  color:#fff;
+  margin-bottom:28px;
+}
+
+/* TAGS */
+.emurika-tags{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.emurika-tag{
+  padding:8px 22px;
+  border-radius:50px;
+  border:1px solid rgba(26,167,232,0.4);
+  font-size:0.85rem;
+  color:#8ecfe8;
+  transition:all 0.25s;
+}
+
+.emurika-tag:hover{
+  background:rgba(26,167,232,0.1);
+  border-color:rgba(26,167,232,0.7);
+  color:#fff;
+}
+
+/* ─── TEAM ─── */
+#team{background:var(--bg)}
+.team-header{margin-bottom:56px}
+.team-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.team-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 14px var(--shadow);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),box-shadow 0.35s;cursor:pointer}
+.team-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 50px var(--shadow2)}
+.team-card-photo{height:240px;background:linear-gradient(160deg,#dce8f5 0%,#e8f2fc 50%,#f0f6ff 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.team-card-photo img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.team-initials{font-family:'Poppins',sans-serif;font-size:3.5rem;font-weight:700;color:rgba(26,167,232,0.25);letter-spacing:-0.02em;position:relative;z-index:0;transition:opacity 0.3s}
+.team-card:hover .team-initials{opacity:0.1}
+.team-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,46,0.6),transparent);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:16px}
+.team-card:hover .team-card-overlay{opacity:1}
+.team-overlay-label{color:#fff;font-size:0.75rem;font-weight:600}
+.team-body{padding:18px 20px}
+.team-name{font-family:'Poppins',sans-serif;font-weight:700;font-size:0.88rem;color:var(--text);margin-bottom:4px}
+.team-role{font-size:0.75rem;color:var(--blue);font-weight:500;margin-bottom:12px;line-height:1.4}
+.team-link{display:inline-flex;align-items:center;gap:5px;font-size:0.76rem;color:var(--text2);font-weight:500;transition:color 0.2s}
+.team-link::before{content:'↗';font-size:0.8rem}
+.team-card:hover .team-link{color:var(--blue)}
+
+/* ─── TEAM MODAL ─── */
+.modal-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s;padding:20px}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-card{background:#fff;border-radius:28px;padding:0;max-width:520px;width:100%;position:relative;transform:translateY(30px) scale(0.94);transition:all 0.4s cubic-bezier(0.16,1,0.3,1);overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.2)}
+.modal-overlay.active .modal-card{transform:translateY(0) scale(1)}
+.modal-photo-area{height:200px;background:linear-gradient(160deg,#dce8f5,#e8f2fc);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.modal-photo-area img{width:90%;height:90%;object-fit:cover;position:absolute;inset:0}
+.modal-photo-placeholder{width:150%;height:150%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.modal-member-icon{font-size:3.5rem;position:relative;z-index:1}
+.modal-photo-overlay{position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to top,rgba(255,255,255,0.95),transparent)}
+.modal-photo-upload{position:absolute;bottom:12px;right:12px;background:rgba(255,255,255,0.9);border:1px solid var(--border);border-radius:10px;padding:6px 12px;font-size:0.72rem;color:var(--text2);font-weight:500;backdrop-filter:blur(6px);cursor:default}
+.modal-close{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:var(--text2);transition:all 0.2s;z-index:10;backdrop-filter:blur(6px)}
+.modal-close:hover{background:#ffe0e0;color:#e53e3e}
+.modal-body{padding:24px 32px 32px}
+.modal-name{font-family:'Poppins',sans-serif;font-size:1.25rem;font-weight:700;text-align:center;margin-bottom:4px}
+.modal-role{text-align:center;color:var(--blue);font-size:0.85rem;font-weight:600;margin-bottom:18px}
+.modal-tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+.modal-tag{padding:4px 14px;border-radius:99px;background:#f5f7fa;border:1px solid var(--border);font-size:0.73rem;color:var(--text2)}
+.modal-bio{font-size:0.87rem;color:var(--text2);line-height:1.8;text-align:center;padding-top:18px;border-top:1px solid var(--border)}
+
+/* ─── CHALLENGES ─── */
+#challenges{background:var(--bg2)}
+.challenges-header{margin-bottom:48px}
+.challenges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.challenge-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 2px 14px var(--shadow);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),box-shadow 0.35s;cursor:pointer;display:block}
+.challenge-card:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 20px 50px var(--shadow2)}
+.challenge-thumb{position:relative;aspect-ratio:4/3;background:linear-gradient(135deg,#c5d2e5,#d5dff0);overflow:hidden}
+.challenge-thumb img{width:100%;height:100%;object-fit:cover}
+.challenge-thumb-placeholder{width:100%;height:100%;background:linear-gradient(135deg,#b8c8db,#cad5e5);display:flex;align-items:center;justify-content:center;color:#88a0bb;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em}
+.challenge-badge{position:absolute;top:14px;left:14px;background:rgba(15,25,35,0.65);backdrop-filter:blur(8px);color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:0.68rem;letter-spacing:0.1em;padding:5px 12px;border-radius:50px}
+.challenge-body{padding:22px 24px}
+.challenge-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:8px}
+.challenge-desc{font-size:0.85rem;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.challenge-phase{display:inline-flex;align-items:center;gap:6px;font-size:0.7rem;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px}
+.challenge-phase::before{content:'○';font-size:0.8rem}
+.challenge-link{font-size:0.83rem;color:var(--blue);font-weight:600;display:flex;align-items:center;gap:4px;transition:gap 0.2s}
+.challenge-card:hover .challenge-link{gap:8px}
+
+/* ─── IMPACT ─── */
+#impact{background:var(--bg)}
+.impact-intro{margin-bottom:60px}
+.impact-intro p{font-size:1rem;color:var(--text2);margin-top:8px}
+.impact-timeline{position:relative}
+.impact-timeline-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(26,167,232,0.5),rgba(26,167,232,0.1));transform:translateX(-50%)}
+.impact-row{display:grid;grid-template-columns:1fr 30px 1fr;align-items:center;position:relative}
+.impact-connector{display:flex;flex-direction:column;align-items:center;position:relative;z-index:2}
+.impact-dot{width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px rgba(26,167,232,0.15);transition:transform 0.3s,box-shadow 0.3s}
+.impact-row:hover .impact-dot{transform:scale(1.4);box-shadow:0 0 0 8px rgba(26,167,232,0.12)}
+.impact-vline{width:1px;flex:1;background:rgba(26,167,232,0.3);min-height:60px}
+.impact-stat{font-family:'Poppins',sans-serif;font-size:3rem;font-weight:900;color:var(--blue);line-height:1}
+.impact-stat small{display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-top:4px}
+.impact-card{background:#fff;border-radius:18px;padding:24px 28px;box-shadow:0 2px 14px var(--shadow);margin:20px 20px;transition:transform 0.3s,box-shadow 0.3s}
+.impact-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px var(--shadow2)}
+.impact-card-year{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.impact-card-title{font-family:'Poppins',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:10px}
+.impact-card-desc{font-size:0.85rem;color:var(--text2);line-height:1.7}
+
+/* ─── CONTACT ─── */
+#contact{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.contact-form-card{background:#fff;border-radius:22px;padding:36px;box-shadow:0 2px 14px var(--shadow)}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-size:0.78rem;font-weight:500;color:var(--text2);margin-bottom:7px}
+.form-input{width:100%;padding:12px 16px;border-radius:12px;background:#f8fafd;border:1px solid rgba(0,0,0,0.09);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;transition:all 0.2s;outline:none}
+.form-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,167,232,0.1)}
+textarea.form-input{min-height:110px;resize:vertical}
+.contact-links{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+.contact-link{display:flex;align-items:center;gap:14px;background:#fff;border-radius:14px;padding:14px 18px;font-size:0.88rem;color:var(--text2);box-shadow:0 2px 10px var(--shadow);transition:all 0.25s}
+.contact-link:hover{box-shadow:0 6px 24px var(--shadow2);transform:translateX(4px)}
+.contact-link-icon{width:36px;height:36px;border-radius:10px;background:rgba(26,167,232,0.1);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+
+/* ─── FOOTER ─── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 48px;text-align:center}
+.footer-logo-img{width:48px;height:48px;border-radius:50%;overflow:hidden;margin:0 auto 14px;background:#d8e2ee}
+.footer-logo-img img{width:100%;height:100%;object-fit:cover}
+.footer-brand{font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:var(--text);margin-bottom:8px;letter-spacing:0.08em}
+.footer-copy{font-size:0.78rem;color:var(--text3)}
+
+/* ─── SCROLL ANIMATIONS ─── */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-left{opacity:0;transform:translateX(-28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-left.visible{opacity:1;transform:translateX(0)}
+.fade-right{opacity:0;transform:translateX(28px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-right.visible{opacity:1;transform:translateX(0)}
+.stagger-1{transition-delay:0.1s}
+.stagger-2{transition-delay:0.2s}
+.stagger-3{transition-delay:0.3s}
+.stagger-4{transition-delay:0.4s}
+.stagger-5{transition-delay:0.5s}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1100px){.team-grid{grid-template-columns:repeat(3,1fr)}.challenges-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.problem-grid{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.emurika-photos{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){nav{padding:0 20px}.nav-links{display:none}.section{padding:70px 20px}#hero{padding:100px 20px 60px}.team-grid{grid-template-columns:repeat(2,1fr)}.challenges-grid{grid-template-columns:1fr}}
+/* FEATURES */
+.emurika-features{
+  margin:70px auto 40px;
+  max-width:1200px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:26px;
+}
+
+.emurika-feature{
+  background:linear-gradient(145deg,#0f1b2d,#0c1626);
+  border:1px solid rgba(26,167,232,0.15);
+  border-radius:18px;
+  padding:28px 22px;
+  transition:all .3s ease;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+.emurika-feature:hover{
+  transform:translateY(-6px);
+  border-color:rgba(26,167,232,0.5);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.5),
+    0 0 20px rgba(26,167,232,.15);
+}
+
+.feature-icon{
+  font-size:28px;
+  margin-bottom:14px;
+}
+
+.emurika-feature h3{
+  color:#fff;
+  font-size:1.05rem;
+  margin-bottom:10px;
+}
+
+.emurika-feature p{
+  color:#9fb3c8;
+  font-size:.9rem;
+  line-height:1.6;
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-ring">
+    <div class="splash-logo-img">
+      <img src="LYNXCESS LOGO.png" alt="LYNXCESS" onerror="this.style.display='none';document.querySelector('.splash-logo-fallback').style.display='flex'">
+      <div class="splash-logo-fallback" style="display:none">LX</div>
+    </div>
+  </div>
+  <div class="splash-text">
+    <div class="splash-name" id="splashTitle"></div>
+    <div class="splash-sub">Innovating Rwanda's Future</div>
+    <div class="splash-bar"><div class="splash-fill"></div></div>
+  </div>
+</div>
+
+<!-- HERO PARTICLES -->
+<div class="hero-particles" id="particles"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">
+    <div class="nav-logo-img"><img src="LYNXCESS LOGO.png" alt="LYNXCESS" onerror="this.style.display='none'"></div>
+    <span class="nav-brand">LYNXCESS</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solutions">Solution</a></li>
+    <li><a href="#emurika">E-Murika</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#challenges">Challenges</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">E-Lab Innovation Journey 2026</div>
+      <h1 class="hero-h1">From Street Survival…<br><span class="blue">To Digital Success</span></h1>
+      <p class="hero-desc">Empowering informal traders in Rwanda through technology — bridging the gap between survival and sustainable digital businesses.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('mission').scrollIntoView({behavior:'smooth'})">Explore Our Story</button>
+        <button class="btn-ghost" onclick="document.getElementById('emurika').scrollIntoView({behavior:'smooth'})">View Prototype</button>
+      </div>
+    </div>
+    <div class="hero-stats-card">
+      <div class="hero-stats-label">Rwanda by the Numbers</div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-count="17.5" data-suffix="%">0%</div>
+        <div class="hero-stat-desc">Unemployment Rate</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num" data-count="90" data-suffix="%">0%</div>
+        <div class="hero-stat-desc">Work in Informal Sector</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-special">E-Murika</div>
+        <div class="hero-stat-desc">Our Digital Solution</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section" id="mission">
+  <div class="section-inner">
+    <div style="text-align:center;max-width:200px;margin:0 auto 0">
+      <div class="section-label" style="justify-content:center">Our Mission</div>
+    </div>
+    <div class="mission-wrap">
+      <div class="mission-card fade-up">
+        <div class="mission-icon">"</div>
+        <p class="mission-quote">To help informal traders in Rwanda transition into legal, sustainable digital businesses that protect their income and support their development.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="section-inner">
+    <div class="problem-grid">
+
+      <!-- LEFT: Image Cards -->
+      <div class="problem-photos">
+        <div class="photo-card">
+          <img src="images/akabase.jpeg" alt="Street vendors in Kigali">
+        </div>
+        <div class="photo-card">
+          <img src="images/banana.jpeg" alt="Street vendors in Kigali">
+        </div>
+        <div class="photo-card">
+          <img src="images/2-womentrade.jpeg" alt="Street vendors in Kigali">
+        </div>
+        <div class="photo-card">
+          <img src="images/umutwe.jpeg" alt="Street vendors in Kigali">
+        </div>
+      </div>
+
+      <!-- RIGHT: Content -->
+      <div class="problem-content">
+        <div class="section-label">The Problem</div>
+        <h2 class="section-title">Rwanda's Invisible Economy</h2>
+        <p class="section-sub">
+          Thousands of informal traders survive on Kigali's streets daily, facing evictions,
+          income instability, and no path to formalization. Prior solutions — designated vendor
+          zones, microfinance, cooperatives — failed to sustain them.
+        </p>
+
+        <div class="problem-stats">
+          <div class="stat-box">
+            <div class="stat-box-num" data-count="17.5" data-suffix="%">0%</div>
+            <div class="stat-box-lbl">Unemployment</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-num" data-count="90" data-suffix="%">0%</div>
+            <div class="stat-box-lbl">Informal Sector</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5 WHYS -->
+<section class="section" id="solutions">
+  <div class="section-inner">
+    <div class="whys-header fade-up">
+      <div class="section-label">Our Solution</div>
+      <h2 class="section-title">How we came up with Solutions</h2>
+      <p class="section-sub">
+        e-Murika doesn’t fight street vendors — it upgrades them. Here’s how the platform removes the real barriers.
+      </p>
+    </div>
+
+    <div class="whys-list">
+
+      <div class="why-item">
+        <div class="why-num">1</div>
+        <div class="why-body">
+          <div class="why-q">Accessible Digital Marketplace</div>
+          <div class="why-a">
+            Vendors sell through a mobile platform without needing a physical shop,
+            expensive rent, or complex setup. A phone becomes their storefront.
+          </div>
+          <div class="why-badge">Solution: Zero Infrastructure Needed</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-num">2</div>
+        <div class="why-body">
+          <div class="why-q">Income Stability & Customer Flow</div>
+          <div class="why-a">
+            Built-in customer discovery, location visibility, and digital ordering
+            create predictable daily sales instead of uncertain street traffic.
+          </div>
+          <div class="why-badge">Solution: Predictable Earnings</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-num">3</div>
+        <div class="why-body">
+          <div class="why-q">Low-Cost Path to Formalization</div>
+          <div class="why-a">
+            Gradual onboarding into compliance: simplified registration guidance,
+            digital records, and scalable growth without overwhelming upfront costs.
+          </div>
+          <div class="why-badge">Solution: Soft Entry to Formal Economy</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-num">4</div>
+        <div class="why-body">
+          <div class="why-q">No Transition Income Shock</div>
+          <div class="why-a">
+            Vendors keep earning while digitizing their operations.
+            There’s no shutdown period or risky business relocation phase.
+          </div>
+          <div class="why-badge">Solution: Earn While Upgrading</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-num">5</div>
+        <div class="why-body">
+          <div class="why-q">Trust, Visibility & Growth Tools</div>
+          <div class="why-a">
+            Ratings, verified profiles, mobile payments, and sales analytics
+            help vendors build reputation, access financing, and scale sustainably.
+          </div>
+          <div class="why-badge">Solution: Digital Growth Engine</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- E-MURIKA -->
+<section id="emurika">
+  <div class="emurika-inner">
+    <div class="emurika-center fade-up">
+      <div class="emurika-logo-ring">
+        <div class="emurika-logo-img">
+          <img src="emurika.png" alt="LYNXCESS" onerror="this.style.display='none'">
+        </div>
+      </div>
+      <div class="emurika-sub-label">Prototype Showcase</div>
+      <h2 class="emurika-title">E-Murika Platform</h2>
+      <div class="emurika-tags">
+        <span class="emurika-tag">Digital</span>
+        <span class="emurika-tag">Accessible</span>
+        <span class="emurika-tag">Sustainable</span>
+        <span class="emurika-tag">Made in Rwanda</span>
+      </div>
+    </div>
+    <div class="emurika-photos">
+      <div class="emurika-photo fade-up stagger-1"><div class="emurika-photo-placeholder"><img scr=""></div></div>
+      <div class="emurika-photo fade-up stagger-2"><div class="emurika-photo-placeholder"><img scr=""></div></div>
+      <div class="emurika-photo fade-up stagger-3"><div class="emurika-photo-placeholder">[<img scr=""></div></div>
+    </div>
+  </div>
+  <!-- FUNCTIONALITIES -->
+<div class="emurika-features">
+  <div class="emurika-feature fade-up stagger-1">
+    <div class="feature-icon"></div>
+    <h3>Local Product Discovery</h3>
+    <p>
+      Users explore locally made products and services in one digital marketplace.
+      Search, filter, and discover verified Rwandan businesses instantly.
+    </p>
+  </div>
+
+  <div class="emurika-feature fade-up stagger-2">
+    <div class="feature-icon">🛒</div>
+    <h3>Smart Ordering System</h3>
+    <p>
+      Customers place orders directly through the platform with a simplified
+      checkout flow designed for mobile-first users.
+    </p>
+  </div>
+
+  <div class="emurika-feature fade-up stagger-3">
+    <div class="feature-icon">🚚</div>
+    <h3>Integrated Delivery Network</h3>
+    <p>
+      Connects local transport providers to handle deliveries efficiently,
+      reducing logistics friction for small businesses.
+    </p>
+  </div>
+
+  <div class="emurika-feature fade-up stagger-4">
+    <div class="feature-icon">📊</div>
+    <h3>Vendor Dashboard</h3>
+    <p>
+      Sellers track sales, inventory, and customer demand through a clean
+      analytics interface.
+    </p>
+  </div>
+
+  <div class="emurika-feature fade-up stagger-5">
+    <div class="feature-icon">💳</div>
+    <h3>Digital Payments</h3>
+    <p>
+      Supports secure cashless transactions to improve transparency and
+      financial inclusion.
+    </p>
+  </div>
+
+  <div class="emurika-feature fade-up stagger-6">
+    <div class="feature-icon">🌍</div>
+    <h3>Market Access Expansion</h3>
+    <p>
+      Helps small local producers reach wider audiences beyond their
+      physical location.
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="section-inner">
+    <div class="team-header fade-up">
+      <div class="section-label">The Builders</div>
+      <h2 class="section-title">Meet the LYNXCESS Team</h2>
+      <p class="section-sub">Five innovators who turned a street problem into a digital solution through their E-Lab journey.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card fade-up stagger-1" onclick="openModal('herve')">
+        <div class="team-card-photo">
+          <img src="team/Passportyange.jpeg" alt="Herve" onerror="this.style.display='none'">
+          <div class="team-initials"></div>
+          <div class="team-card-overlay"><span class="team-overlay-label">View Profile</span></div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Herve Kubana Friend</div>
+          <div class="team-role">CEO &amp; Lead Designer</div>
+          <div class="team-link">View Profile</div>
+        </div>
+      </div>
+      <div class="team-card fade-up stagger-2" onclick="openModal('hubert')">
+        <div class="team-card-photo">
+          <img src="team/hubert.jpg" alt="Hubert" onerror="this.style.display='none'">
+          <div class="team-initials"></div>
+          <div class="team-card-overlay"><span class="team-overlay-label">View Profile</span></div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Hubert Migabo</div>
+          <div class="team-role">Prototyping Lead &amp; UX Engineer</div>
+          <div class="team-link">View Profile</div>
+        </div>
+      </div>
+      <div class="team-card fade-up stagger-3" onclick="openModal('harriet')">
+        <div class="team-card-photo">
+          <img src="team/harriet.heic" alt="Harriet" onerror="this.style.display='none'">
+          <div class="team-initials"></div>
+          <div class="team-card-overlay"><span class="team-overlay-label">View Profile</span></div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Harriet Kubwimana</div>
+          <div class="team-role">Fund Protection &amp; Financial Manager</div>
+          <div class="team-link">View Profile</div>
+        </div>
+      </div>
+      <div class="team-card fade-up stagger-4" onclick="openModal('nina')">
+        <div class="team-card-photo">
+          <img src="team/nina.jpeg" alt="Nina" onerror="this.style.display='none'">
+          <div class="team-initials"></div>
+          <div class="team-card-overlay"><span class="team-overlay-label">View Profile</span></div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Isimbi Nina Henriette</div>
+          <div class="team-role">Prototyping Assistant &amp; QA Tester</div>
+          <div class="team-link">View Profile</div>
+        </div>
+      </div>
+      <div class="team-card fade-up stagger-5" onclick="openModal('gloria')">
+        <div class="team-card-photo">
+          <img src="team/gaju.jpeg" alt="Gloria" onerror="this.style.display='none'">
+          <div class="team-initials"></div>
+          <div class="team-card-overlay"><span class="team-overlay-label">View Profile</span></div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">Gaju Isimbi Gloria</div>
+          <div class="team-role">Advisor &amp; Presentation Designer</div>
+          <div class="team-link">View Profile</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM MODAL -->
+<div class="modal-overlay" id="teamModal" onclick="closeModalOutside(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-photo-area">
+      <img id="modalImg" src="" alt="" style="display:none">
+      <div class="modal-photo-placeholder" id="modalPlaceholder">
+        <div class="modal-member-icon" id="modalIcon"></div>
+      </div>
+      <div class="modal-photo-overlay"></div>
+      <div class="modal-photo-upload"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-role" id="modalRole"></div>
+      <div class="modal-tags">
+        <span class="modal-tag" id="modalNationality"></span>
+        <span class="modal-tag" id="modalEmail"></span>
+      </div>
+      <div class="modal-bio" id="modalBio"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHALLENGES -->
+<section class="section" id="challenges">
+  <div class="section-inner">
+    <div class="challenges-header fade-up">
+      <div class="section-label">E-Lab Journey</div>
+      <h2 class="section-title">Our E-Lab Challenges</h2>
+      <p class="section-sub">Five milestones we completed during our Think Tank journey — click any challenge to explore the full story.</p>
+    </div>
+
+    <div class="challenges-grid">
+
+      <!-- Challenge 1 -->
+      <a href="https://youtu.be/cuyPk17VtQ8" class="challenge-card fade-up stagger-1">
+  <div class="challenge-thumb">
+    <img src="images/intro.jpeg" alt="Challenge 1">
+    <div class="challenge-badge">CHALLENGE 01</div>
+  </div>
+        <div class="challenge-body">
+          <div class="challenge-title">Team Introduction & Vision Setting</div>
+          <div class="challenge-desc">
+            We introduced ourselves, shared our strengths, and defined what each member would contribute to the Think Tank. We aligned on our mission and collaboration approach.
+          </div>
+          <div class="challenge-phase">Foundation Phase</div>
+          <div class="challenge-link">Open Full Story →</div>
+        </div>
+      </a>
+
+      <!-- Challenge 2 -->
+      <a href="https://youtu.be/jDkN5CTMP3s" class="challenge-card fade-up stagger-1">
+  <div class="challenge-thumb">
+    <img src="images/umutwe.jpeg" alt="Challenge 2">
+    <div class="challenge-badge">CHALLENGE 02</div>
+  </div>
+        <div class="challenge-body">
+          <div class="challenge-title">African Community Storytelling</div>
+          <div class="challenge-desc">
+            We told an untold story of an African community using creative media formats like news broadcasts, podcasts, vlogs, and radio. Each member played a defined storytelling role.
+          </div>
+          <div class="challenge-phase">Awareness Phase</div>
+          <div class="challenge-link">Open Full Story →</div>
+        </div>
+      </a>
+
+     <a href="https://youtu.be/4QEypAPovTw" class="challenge-card fade-up stagger-1">
+  <div class="challenge-thumb">
+    <img src="images/wheelbarrwoman.jpeg" alt="Challenge 1">
+    <div class="challenge-badge">CHALLENGE 03</div>
+  </div>
+        <div class="challenge-body">
+          <div class="challenge-title">HELP-LAB Community Impact</div>
+          <div class="challenge-desc">
+            We chose a cause and created real community impact. Our journey was documented and compiled into a 3-minute video shared on YouTube and Instagram with reflections.
+          </div>
+          <div class="challenge-phase">Impact Phase</div>
+          <div class="challenge-link">Open Full Story →</div>
+        </div>
+      </a>
+
+      <!-- Challenge 4 -->
+      <a href="https://youtu.be/apPLVBNH-hs" class="challenge-card fade-up stagger-1">
+  <div class="challenge-thumb">
+    <img src="Chall5.HEIC" alt="Challenge 1">
+    <div class="challenge-badge">CHALLENGE 04</div>
+  </div>
+        <div class="challenge-body">
+          <div class="challenge-title">Field Interview & Ecosystem Learning</div>
+          <div class="challenge-desc">
+            We interviewed an organization aligned with our G.C.G.O focus area to understand their mission, operations, challenges, success stories, and future plans.
+          </div>
+          <div class="challenge-phase">Field Research Phase</div>
+          <div class="challenge-link">Open Full Story →</div>
+        </div>
+      </a>
+
+      <!-- Challenge 5 -->
+           <a href="https://youtu.be/PekGgXzJHIU" class="challenge-card fade-up stagger-1">
+  <div class="challenge-thumb">
+    <img src="emurika.png" alt="Challenge 5">
+    <div class="challenge-badge">CHALLENGE 05</div>
+  </div>
+        <div class="challenge-body">
+          <div class="challenge-title">$10,000 Grant Proposal & Pitch</div>
+          <div class="challenge-desc">
+            We developed a compelling project proposal and 3-minute pitch presenting who we are, the problem, our solution, execution plan, and why funding would accelerate impact.
+          </div>
+          <div class="challenge-phase">Launch Phase</div>
+          <div class="challenge-link">Open Full Story →</div>
+        </div>
+      </a>
+
+
+    </div>
+  </div>
+</section>
+<!-- IMPACT -->
+<section class="section" id="impact">
+  <div class="section-inner">
+    <div class="impact-intro fade-up">
+      <div class="section-label">Our Roadmap</div>
+      <h2 class="section-title">Impact &amp; Vision</h2>
+      <p>From Kigali's streets to East Africa's digital economy.</p>
+    </div>
+    <div class="impact-timeline">
+      <div class="impact-timeline-line"></div>
+      <!-- 2025 -->
+      <div class="impact-row" style="grid-template-columns:1fr 30px 1fr;align-items:center">
+        <div style="display:flex;justify-content:flex-end">
+          <div class="impact-card fade-left" style="max-width:480px;width:100%">
+            <div class="impact-card-year">2026 — Launch</div>
+            <div class="impact-card-title">E-Murika MVP Goes Live <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:50%;margin-left:8px;vertical-align:middle"></span></div>
+            <div class="impact-card-desc">50 pilot vendors onboarded in Kigali. Mobile marketplace live with MoMo Pay. First 500 digital transactions processed.</div>
+          </div>
+        </div>
+        <div class="impact-connector"><div class="impact-dot"></div><div class="impact-vline"></div></div>
+        <div style="padding-left:30px">
+          <div class="impact-stat fade-right">50<small>Pilot Vendors</small></div>
+        </div>
+      </div>
+      <!-- 2026 -->
+      <div class="impact-row" style="grid-template-columns:1fr 30px 1fr;align-items:center">
+        <div style="display:flex;justify-content:flex-end;padding-right:30px">
+          <div class="fade-left">
+            <div class="impact-stat" style="font-size:3rem">500+<small>Registered Vendors</small></div>
+          </div>
+        </div>
+        <div class="impact-connector"><div class="impact-dot"></div><div class="impact-vline"></div></div>
+        <div>
+          <div class="impact-card fade-right" style="max-width:480px;width:100%">
+            <div class="impact-card-year">2027 — Growth</div>
+            <div class="impact-card-title">Scaling Across Kigali <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:50%;margin-left:8px;vertical-align:middle"></span></div>
+            <div class="impact-card-desc">500+ vendors registered. Kinyarwanda support. RDB partnership for streamlined registration. Youth &amp; women cohorts launched.</div>
+          </div>
+        </div>
+      </div>
+      <!-- 2028 -->
+      <div class="impact-row" style="grid-template-columns:1fr 30px 1fr;align-items:center">
+        <div style="display:flex;justify-content:flex-end">
+          <div class="impact-card fade-left" style="max-width:480px;width:100%">
+            <div class="impact-card-year">2029 — Expansion</div>
+            <div class="impact-card-title">National Coverage <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:50%;margin-left:8px;vertical-align:middle"></span></div>
+            <div class="impact-card-desc">2,000+ vendors across Rwanda. B2B marketplace. Logistics partnerships. 40% reduction in street vending in target areas.</div>
+          </div>
+        </div>
+        <div class="impact-connector"><div class="impact-dot"></div><div class="impact-vline"></div></div>
+        <div style="padding-left:30px">
+          <div class="impact-stat fade-right" style="font-size:3rem">2K+<small>Nationwide</small></div>
+        </div>
+      </div>
+      <!-- 2030 -->
+      <div class="impact-row" style="grid-template-columns:1fr 30px 1fr;align-items:center">
+        <div style="display:flex;justify-content:flex-end;padding-right:30px">
+          <div class="fade-left">
+            <div class="impact-stat" style="font-size:3rem">50K+<small>East Africa</small></div>
+          </div>
+        </div>
+        <div class="impact-connector"><div class="impact-dot"></div></div>
+        <div>
+          <div class="impact-card fade-right" style="max-width:480px;width:100%">
+            <div class="impact-card-year">2030 — Vision</div>
+            <div class="impact-card-title">East Africa &amp; Beyond <span style="display:inline-block;width:10px;height:10px;background:var(--blue);border-radius:50%;margin-left:8px;vertical-align:middle"></span></div>
+            <div class="impact-card-desc">50,000+ vendors across East Africa. E-Murika becomes the continent's leading informal-to-digital commerce bridge.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="fade-left">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-sub">Have questions about E-Murika, our E-Lab journey, or collaboration opportunities? We'd love to hear from you.</p>
+        <div class="contact-links">
+          <div class="contact-link"><div class="contact-link-icon">✉️</div><span>h.kubana@alustudent.com</span></div>
+          <div class="contact-link"><div class="contact-link-icon">🌍</div><span>Kigali, Rwanda</span></div>
+          <div class="contact-link"><div class="contact-link-icon">🎓</div><span>African Leadership University — E-Lab 2026</span></div>
+        </div>
+      </div>
+      <div class="contact-form-card fade-right">
+        <div class="form-group"><label class="form-label">Your Name</label><input type="text" class="form-input" placeholder="Enter your name"></div>
+        <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="you@example.com"></div>
+        <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" placeholder="Tell us about your interest in E-Murika…"></textarea></div>
+        <button class="btn-primary" style="width:100%">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo-img"><img src="LYNXCESS LOGO.png" alt="LYNXCESS" onerror="this.style.display='none'"></div>
+  <div class="footer-brand">LYNXCESS</div>
+  <p class="footer-copy">© 2026 LYNXCESS Team · African Leadership University E-Lab · Built with purpose for Rwanda's future</p>
+</footer>
+
+<script>
+/* ── SPLASH ── */
+const splashEl=document.getElementById('splash');
+const titleEl=document.getElementById('splashTitle');
+const txt='LYNXCESS';let ci=0;
+function typeChar(){if(ci<=txt.length){titleEl.textContent=txt.slice(0,ci++);setTimeout(typeChar,90)}}
+setTimeout(typeChar,350);
+setTimeout(()=>{splashEl.classList.add('out');setTimeout(()=>splashEl.remove(),800)},2800);
+
+/* ── PARTICLES ── */
+const pc=document.getElementById('particles');
+for(let i=0;i<18;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  const sz=Math.random()*6+3;
+  const x=Math.random()*100;
+  const dur=Math.random()*12+8;
+  const del=Math.random()*8;
+  const op=Math.random()*0.3+0.05;
+  p.style.cssText=`width:${sz}px;height:${sz}px;left:${x}%;background:${Math.random()>0.5?'rgba(26,167,232,'+op+')':'rgba(124,58,237,'+op+')'};animation-duration:${dur}s;animation-delay:-${del}s`;
+  pc.appendChild(p);
+}
+
+/* ── NAV HIDE/SHOW ── */
+let lastY=0;
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const nav=document.getElementById('nav');
+  nav.classList.toggle('scrolled',y>30);
+  nav.classList.toggle('hidden',y>lastY&&y>200);
+  lastY=y;
+});
+
+/* ── SCROLL ANIMATIONS ── */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-up,.fade-left,.fade-right,.why-item').forEach(el=>obs.observe(el));
+
+/* ── COUNTER ── */
+function animCount(el){
+  const tgt=parseFloat(el.dataset.count);
+  const suf=el.dataset.suffix||'';
+  const isF=tgt%1!==0;
+  const dur=1600;const st=performance.now();
+  function tick(now){
+    const t=Math.min((now-st)/dur,1);
+    const ease=1-Math.pow(1-t,3);
+    const val=tgt*ease;
+    el.textContent=(isF?val.toFixed(1):Math.round(val))+suf;
+    if(t<1)requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-count]').forEach(animCount);
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('#hero,#problem').forEach(el=>cObs.observe(el));
+
+/* ── TEAM MODAL ── */
+const teamData={
+  herve:{name:'Herve Kubana Friend',role:'CEO & Lead Designer',nationality:'Rwandan',email:'h.kubana@alustudent.com',bio:'As the CEO and lead designer of E-Murika, I conceptualized the platform to transition informal traders into digital businesses. I led the design process, prototyping, and guided the team through our E-Lab journey.',icon:'👑',photo:'team/passportyange.jpeg'},
+  hubert:{name:'Hubert Migabo',role:'Prototyping Lead & UX Engineer',nationality:'Rwandan',email:'h.migabo@alustudent.com',bio:'As Prototyping Lead and UX Engineer, I translated our research and ideas into interactive, user-friendly flows. I built and iterated on E-Murika\'s prototype, conducting usability tests with real vendors.',icon:'⚙️',photo:'team/hubert.jpg'},
+  harriet:{name:'Harriet Kubwimana',role:'Fund Protection & Financial Manager',nationality:'Rwandan',email:'h.kubwimana@alustudent.com',bio:'I managed the financial dimension of E-Murika — from budget planning to vendor income protection frameworks. My work ensured a sustainable, ethical economic model that truly safeguards the traders who depend on it.',icon:'💼',photo:'team/harriet.heic'},
+  nina:{name:'Isimbi Nina Henriette',role:'Prototyping Assistant & QA Tester',nationality:'Rwandan',email:'n.isimbi@alustudent.com',bio:'I supported the prototyping process and led quality assurance testing across E-Murika\'s features. I made sure every element worked seamlessly for our target users.',icon:'🔬',photo:'team/nina.jpeg'},
+  gloria:{name:'Gaju Isimbi Gloria',role:'Advisor & Presentation Designer',nationality:'Rwandan',email:'g.isimbi@alustudent.com',bio:'As the team\'s advisor and storyteller, I shaped how E-Murika\'s mission was communicated to the world. I designed our presentations and ensured every pitch landed with clarity and professional polish.',icon:'✨',photo:'team/gaju.jpeg'}
+};
+function openModal(id){
+  const d=teamData[id];if(!d)return;
+  document.getElementById('modalIcon').textContent=d.icon;
+  document.getElementById('modalName').textContent=d.name;
+  document.getElementById('modalRole').textContent=d.role;
+  document.getElementById('modalNationality').textContent=d.nationality;
+  document.getElementById('modalEmail').textContent=d.email;
+  document.getElementById('modalBio').textContent=d.bio;
+  const img=document.getElementById('modalImg');
+  const ph=document.getElementById('modalPlaceholder');
+  img.src=d.photo;img.alt=d.name;
+  img.onload=()=>{img.style.display='block';ph.style.display='none'};
+  img.onerror=()=>{img.style.display='none';ph.style.display='flex'};
+  document.getElementById('teamModal').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('teamModal').classList.remove('active');document.body.style.overflow=''}
+function closeModalOutside(e){if(e.target===document.getElementById('teamModal'))closeModal()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+</script>
+<script>
+function animateNumber(el){
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1600;
+  const decimals = (target % 1 !== 0) ? 1 : 0;
+
+  const startTime = performance.now();
+
+  function update(now){
+    const progress = Math.min((now - startTime)/duration, 1);
+    const value = progress * target;
+    el.textContent = value.toFixed(decimals) + suffix;
+    if(progress < 1){
+      requestAnimationFrame(update);
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+function resetNumber(el){
+  const suffix = el.dataset.suffix || '';
+  el.textContent = '0' + suffix;
+}
+
+function startLoop(el){
+  animateNumber(el);
+  setInterval(()=>{
+    resetNumber(el);
+    setTimeout(()=> animateNumber(el), 80); // tiny delay for smooth reset
+  }, 30000); // 30 seconds
+}
+
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el = entry.target;
+      if(!el.classList.contains('looping')){
+        startLoop(el);
+        el.classList.add('looping');
+      }
+    }
+  });
+},{ threshold:0.6 });
+
+document.querySelectorAll('.hero-stat-num')
+  .forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
